@@ -67,6 +67,36 @@ class Solution{
         
         
     }
+    vector<int> leftview(Node* root){
+        vector<int>ans;
+        queue<Node*>q;
+
+
+
+        if(!root){
+            return ans;
+        }
+        q.push(root);
+        while(!q.empty()){
+            ans.push_back(q.front()->data);
+            int n=q.size();
+            while(n){
+                Node *temp=q.front();
+                q.pop();
+                n--;
+                if(temp->left){
+                    q.push(temp->left);
+                }
+                if(temp->right){
+                    q.push(temp->right);
+                }
+
+            }
+
+    
+        }
+    }
+
 
 
 };
