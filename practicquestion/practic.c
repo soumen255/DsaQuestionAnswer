@@ -1,9 +1,18 @@
 #include <stdio.h>
 
 int main() {
-    char str[100];
-    printf("Enter a string: ");
-    gets(str);  // Reads a string from the user (with spaces)
-    printf("You entered: %s\n", str);
+    FILE *file = fopen("text.txt", "r");  // Open file in read mode
+    if (file == NULL) {
+        printf("Could not open the file.\n");
+        return 1;
+    }
+
+    char ch;
+    // Read and print characters until end of file (EOF)
+    while ((ch = fgetc(file)) != EOF) {
+        printf("%c",ch); // Print each character to the console
+    }
+
+    fclose(file);  // Close the file
     return 0;
 }
