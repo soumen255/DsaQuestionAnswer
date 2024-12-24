@@ -36,3 +36,11 @@ class Node{
     
 
 };
+
+int main(){
+    Node *root;
+    root->data=45;
+    root->binary_search_tree_insertion(root);
+    return 0;
+
+}
