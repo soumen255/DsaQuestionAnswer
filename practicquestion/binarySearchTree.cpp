@@ -33,6 +33,9 @@ class Node{
          
         
     }
+    void print(){
+        
+    }
     
 
 };
