@@ -1,0 +1,3 @@
+Name                Age  Mark1  Mark2  Mark3  Average
+-----------------------------------------------------
+soumen bhandari     19   34     56     98     62.67

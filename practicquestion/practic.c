@@ -1,63 +1,70 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include<string.h>
+#include<stdlib.h>
+struct Student {
+    char name[50];
+    int roll_no;
+    float marks[5];  // Assuming 5 subjects
+    float average;
+};
+
+// Function to calculate the average marks of a student
+void calculate_average(struct Student *stu, int subjects) {
+    float total = 0;
+    for (int i = 0; i < subjects; i++) {
+        total += stu->marks[i];
+    }
+    stu->average = total / subjects;
+}
 
 int main() {
-    int *arr; // Pointer to hold the base address of the array
-    int n, i;
+    int n, subjects = 5;
 
-    // Ask the user for the initial size of the array
-    printf("Enter the number of elements: ");
+    printf("Enter the number of students: ");
     scanf("%d", &n);
 
-    // Dynamically allocate memory for 'n' integers
-    arr = (int *)malloc(n * sizeof(int));
-    if (arr == NULL) {
-        printf("Memory allocation failed.\n");
-        return 1; // Exit if memory allocation fails
+    struct Student students[n];
+
+    // Input student details
+    for (int i = 0; i < n; i++) {
+        printf("\nEnter details for Student %d:\n", i + 1);
+
+        printf("Enter name: ");
+        getchar(); // Consume newline character left in buffer
+        fgets(students[i].name, sizeof(students[i].name), stdin);
+       
+
+        printf("Enter roll number: ");
+        scanf("%d", &students[i].roll_no);
+
+        printf("Enter marks for %d subjects:\n", subjects);
+        for (int j = 0; j < subjects; j++) {
+            printf("  Subject %d: ", j + 1);
+            scanf("%f", &students[i].marks[j]);
+        }
+
+        // Calculate average marks
+        calculate_average(&students[i], subjects);
     }
 
-    // Input elements into the array
-    printf("Enter %d elements:\n", n);
-    for (i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
+    // Display eligible students
+    printf("\nEligible Students for Training (Average Marks > 75):\n");
+    printf("-----------------------------------------------------\n");
+    printf("Name                | Roll No | Average Marks\n");
+    printf("-----------------------------------------------------\n");
 
-    // Display the elements entered by the user
-    printf("You entered:\n");
-    for (i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    // Ask if the user wants to resize the array
-    printf("Enter new size for the array: ");
-    int newSize;
-    scanf("%d", &newSize);
-
-    // Resize the array using realloc
-    arr = (int *)realloc(arr, newSize * sizeof(int));
-    if (arr == NULL) {
-        printf("Reallocation failed.\n");
-        return 1; // Exit if reallocation fails
-    }
-
-    // If new size is larger, ask for additional elements
-    if (newSize > n) {
-        printf("Enter %d more elements:\n", newSize - n);
-        for (i = n; i < newSize; i++) {
-            scanf("%d", &arr[i]);
+    int eligible_count = 0;
+    for (int i = 0; i < n; i++) {
+        if (students[i].average > 75) {
+            eligible_count++;
+            printf("%-20s | %-7d | %-12.2f\n", 
+                   students[i].name, students[i].roll_no, students[i].average);
         }
     }
 
-    // Display all elements in the resized array
-    printf("All elements in the resized array:\n");
-    for (i = 0; i < newSize; i++) {
-        printf("%d ",*(arr+i));
+    if (eligible_count == 0) {
+        printf("No students are eligible for training.\n");
     }
-    printf("\n");
 
-    // Free the allocated memory
-    free(arr);
-    
     return 0;
 }
